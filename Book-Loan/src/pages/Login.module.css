@@ -1,0 +1,11 @@
+.container {
+    @apply flex flex-col items-center justify-center min-h-screen bg-gray-50;
+}
+
+.title {
+    @apply text-3xl font-bold text-gray-800 mb-6;
+}
+
+.link {
+    @apply bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition;
+}

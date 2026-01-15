@@ -1,0 +1,93 @@
+.pageContainer {
+    @apply flex flex-col w-full;
+}
+
+/* --- Hero Section --- */
+.heroSection {
+    @apply min-h-[80vh] flex flex-col items-center justify-center bg-blue-50 text-center p-8;
+}
+
+.heroTitle {
+    @apply text-5xl font-bold text-blue-900 mb-6;
+}
+
+.heroText {
+    @apply text-xl text-gray-700 mb-8 max-w-2xl;
+}
+
+.ctaButton {
+    @apply bg-blue-600 text-white px-8 py-3 rounded-full text-lg hover:bg-blue-700 transition shadow-lg;
+}
+
+/* --- About Section --- */
+.aboutSection {
+    @apply py-20 bg-white text-center px-4;
+}
+
+.sectionContainer {
+    @apply container mx-auto;
+}
+
+.sectionTitle {
+    @apply text-3xl font-bold text-gray-800 mb-6;
+    text-align: center
+}
+
+.separator {
+    @apply w-24 h-1 bg-blue-500 mx-auto mb-8;
+}
+
+.aboutText {
+    @apply text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto;
+}
+
+/* --- E-book Section --- */
+.ebookSection {
+    @apply py-20 bg-gray-100 text-center px-4;
+}
+
+.ebookSeparator {
+    @apply w-24 h-1 bg-blue-500 mx-auto mb-10;
+}
+
+.ebookContent {
+    @apply flex flex-col items-center;
+}
+
+.ebookText {
+    @apply text-gray-600 mb-8;
+}
+
+.libraryButton {
+    @apply border-2 border-blue-600 text-blue-600 px-8 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition font-bold;
+}
+
+/* --- Services Section --- */
+.servicesSection {
+    @apply py-20 bg-white px-4;
+}
+
+.servicesSeparator {
+    @apply w-24 h-1 bg-blue-500 mx-auto mb-12;
+}
+
+.servicesGrid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto;
+}
+
+.serviceCard {
+    @apply p-8 border rounded-xl shadow-sm hover:shadow-md transition bg-gray-50;
+}
+
+.serviceTitle {
+    @apply text-xl font-bold text-blue-800 mb-3;
+}
+
+.serviceText {
+    @apply text-gray-600;
+}
+
+/* --- Footer --- */
+.footer {
+    @apply bg-gray-800 text-white py-8 text-center;
+}
