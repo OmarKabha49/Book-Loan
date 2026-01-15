@@ -1,78 +1,107 @@
-import { useState } from 'react' // 1. Import useState
-import { Link } from "react-router-dom" // We keep Link only for Login/Logout if needed
+import { useState } from 'react'
+import { Link } from "react-router-dom"
 import styles from './Home2.module.css'
+import BookCard from '../components/BookCard'
+import SecureBookReader from '../components/SecureBookReader'
+
+const booksData = [
+    {
+        id: 1,
+        title: "الخوارزميات",
+        author: "برطم",
+        cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1000&auto=format&fit=crop",
+        pdfUrl: "/books/Algo1.pdf" 
+    },
+    {
+        id: 2,
+        title: "الاحتمال",
+        author: "يوسف خوري",
+        cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1000&auto=format&fit=crop",
+        pdfUrl: "/books/Lecture1.pdf"
+    },
+];
 
 function Home2() {
-    // State to track which tab is active (0 = Home, 1 = Shop, 2 = About, 3 = Contact)
     const [activeTab, setActiveTab] = useState(0);
+    
+    const [readingBook, setReadingBook] = useState(null);
 
-    // Helper function to check if a tab is active
     const getTabClass = (index) => {
-        return `${styles.navButton} ${activeTab === index ? styles.active : ''}`;
+        return `${styles.navButton || ''} ${activeTab === index ? 'text-blue-600 font-bold border-b-2 border-blue-600' : 'text-gray-500'}`;
     };
+
+    const closeReader = () => {
+        setReadingBook(null);
+    };
+
+    if (readingBook) {
+        return (
+            <div className="relative w-full h-screen bg-gray-900">
+                <button 
+                    onClick={closeReader}
+                    className="absolute top-4 right-4 z-50 bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-red-700 font-bold"
+                >
+                    X إغلاق الكتاب
+                </button>
+                
+                <SecureBookReader pdfUrl={readingBook.pdfUrl} />
+            </div>
+        );
+    }
 
     return (
         <div className={styles.mainContainer}>
 
-            {/* --- Header --- */}
             <header className={styles.header}>
                 <div className={styles.logo}>اسم المنصة</div>
-
                 <nav className={styles.navTabs}>
-                    {/* Buttons update the state instead of navigating */}
                     <button onClick={() => setActiveTab(0)} className={getTabClass(0)}>الرئيسية</button>
                     <button onClick={() => setActiveTab(1)} className={getTabClass(1)}>المتجر</button>
                     <button onClick={() => setActiveTab(2)} className={getTabClass(2)}>من نحن</button>
                     <button onClick={() => setActiveTab(3)} className={getTabClass(3)}>تواصل معنا</button>
                 </nav>
-
-                <Link to="/login" className="px-5 py-2 border-2 border-blue-600 text-blue-600 font-bold rounded-lg hover:bg-blue-600 hover:text-white transition">
+               <Link to="/login" className="px-5 py-2 border-2 border-blue-600 text-blue-600 font-bold rounded-lg hover:bg-blue-600 hover:text-white transition">
                     تسجيل دخول
                 </Link>
             </header>
 
-
-            {/* --- SLIDER AREA --- */}
             <div className={styles.sliderWindow}>
-                {/* Logic: Move the track based on activeTab.
-                    In RTL Flexbox: Item 0 is rightmost. Item 1 is to its left.
-                    To show Item 1, we translate X by +100%.
-                    To show Item 2, we translate X by +200%.
-                */}
                 <div 
                     className={styles.sliderTrack} 
                     style={{ transform: `translateX(${activeTab * 100}%)` }}
                 >
 
-                    {/* SLIDE 0: HOME */}
                     <section className={styles.slideSection} style={{ background: 'linear-gradient(to bottom, #ffffff, #eff6ff)' }}>
-                        <h1 className={styles.heroTitle}>
-                            القراءة أصبحت <span className="text-blue-600">أسهل</span>
-                        </h1>
+                        <h1 className={styles.heroTitle}>القراءة أصبحت <span className="text-blue-600">أسهل</span></h1>
                         <p className={styles.heroSubtitle}>
                             مكتبة رقمية متكاملة تضع بين يديك آلاف الكتب العربية والعالمية.
                             تصميم بسيط، تصفح سريع، وقراءة ممتعة.
-                        </p>
-                        <button onClick={() => setActiveTab(1)} className={styles.actionButton}>
-                            تصفح الكتب الآن
-                        </button>
+                        </p>                        
+                        <button onClick={() => setActiveTab(1)} className={styles.actionButton}>تصفح الكتب الآن</button>
                     </section>
 
 
-                    {/* SLIDE 1: SHOP (Placeholder Content) */}
-                    <section className={styles.slideSection} style={{ backgroundColor: '#f0f9ff' }}>
-                        <h2 className="text-4xl font-bold mb-4 text-blue-800">المتجر الإلكتروني</h2>
-                        <p className="text-gray-600 mb-8">هنا ستظهر قائمة الكتب المتاحة للشراء.</p>
-                        {/* Demo Cards */}
-                        <div className="flex gap-4">
-                            <div className="w-40 h-60 bg-white shadow-md rounded-lg flex items-center justify-center">كتاب 1</div>
-                            <div className="w-40 h-60 bg-white shadow-md rounded-lg flex items-center justify-center">كتاب 2</div>
-                            <div className="w-40 h-60 bg-white shadow-md rounded-lg flex items-center justify-center">كتاب 3</div>
+                    <section className={styles.slideSection} style={{ backgroundColor: '#f0f9ff', overflowY: 'auto' }}>
+                        <div className="container mx-auto py-10 px-4">
+                            <h2 className="text-3xl font-bold mb-2 text-blue-900">المتجر الإلكتروني</h2>
+                            <p className="text-gray-600 mb-10">اختر كتابك وابدأ القراءة فوراً بأمان عالي.</p>
+                            
+                            <div className="flex flex-wrap justify-center gap-8 pb-20">
+                                {booksData.map((book) => (
+                                    <BookCard 
+                                        key={book.id}
+                                        title={book.title}
+                                        author={book.author}
+                                        coverImage={book.cover}
+                                        onRead={() => setReadingBook(book)}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </section>
 
 
-                    {/* SLIDE 2: ABOUT */}
+                    
                     <section className={styles.slideSection} style={{ backgroundColor: '#fff' }}>
                         <h2 className="text-4xl font-bold mb-4 text-green-700">من نحن؟</h2>
                         <p className="max-w-xl text-lg text-gray-600">
@@ -81,7 +110,6 @@ function Home2() {
                     </section>
 
 
-                    {/* SLIDE 3: CONTACT */}
                     <section className={styles.slideSection} style={{ backgroundColor: '#abd3bcff' }}>
                         <h2 className="text-4xl font-bold mb-4 text-blue-600">تواصل معنا</h2>
                         <form className="flex flex-col gap-4 w-full max-w-md">
@@ -96,10 +124,8 @@ function Home2() {
                 </div>
             </div>
 
-
-            {/* --- Footer --- */}
             <footer className={styles.footer}>
-                <p>© 2026 جميع الحقوق محفوظة لمنصة [اسم المنصة]</p>
+                <p>© 2026 اسم المنصة - جميع الحقوق محفوظة</p>
             </footer>
 
         </div>
